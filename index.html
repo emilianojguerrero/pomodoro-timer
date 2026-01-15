@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Focus — Pomodoro Timer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="A clean, modern Pomodoro timer with sound and basic stats." />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <div class="brand">
+        <h1>Focus</h1>
+        <p class="tagline">A minimal, modern Pomodoro timer</p>
+      </div>
+      <div class="controls-top">
+        <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙️</button>
+      </div>
+    </header>
+
+    <section class="card timer-card" role="region" aria-label="Focus timer">
+      <div class="timer-ring" id="ring">
+        <svg viewBox="0 0 120 120" class="ring-svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="grad" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#66aaff" />
+              <stop offset="100%" stop-color="#7b61ff" />
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg" cx="60" cy="60" r="52" />
+          <circle class="ring-fg" cx="60" cy="60" r="52" stroke="url(#grad)" stroke-linecap="round" />
+        </svg>
+
+        <div class="timer-labels">
+          <div class="session-type" id="sessionType">Focus</div>
+          <div class="time" id="time">25:00</div>
+          <div class="subtext" id="subtext">Press Start — 1 session to long break</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="presets">
+          <button data-mode="focus" class="preset active">25</button>
+          <button data-mode="short" class="preset">5</button>
+          <button data-mode="long" class="preset">15</button>
+          <div class="label">min</div>
+        </div>
+
+        <div class="buttons">
+          <button id="startBtn" class="primary">Start</button>
+          <button id="pauseBtn" class="secondary" disabled>Pause</button>
+          <button id="resetBtn" class="ghost">Reset</button>
+        </div>
+
+        <div class="extras">
+          <label class="toggle">
+            <input type="checkbox" id="soundToggle" checked />
+            <span>Sound</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="notifyToggle" />
+            <span>Notify</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="card stats-card" role="region" aria-label="Session statistics">
+      <h2>Stats</h2>
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="small">Today</div>
+          <div class="big" id="todaySessions">0</div>
+          <div class="muted">sessions</div>
+        </div>
+        <div class="stat">
+          <div class="small">Focus Time</div>
+          <div class="big" id="totalTime">0m</div>
+          <div class="muted">total</div>
+        </div>
+        <div class="stat">
+          <div class="small">Streak</div>
+          <div class="big" id="streak">0</div>
+          <div class="muted">days</div>
+        </div>
+      </div>
+
+      <div class="history">
+        <h3>Recent sessions</h3>
+        <ul id="historyList" class="history-list" aria-live="polite"></ul>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <small>Designed with a modern, minimal aesthetic. Keyboard: Space to Start/Pause · R to Reset</small>
+    </footer>
+
+    <!-- Settings modal (simple, in-page) -->
+    <div id="settingsModal" class="modal" aria-hidden="true" role="dialog" aria-label="Settings">
+      <div class="modal-card">
+        <header class="modal-header">
+          <h3>Settings</h3>
+          <button id="closeSettings" class="icon-btn">✕</button>
+        </header>
+        <div class="modal-body">
+          <label class="row">
+            <span>Focus length (min)</span>
+            <input type="number" id="focusLength" min="5" max="120" value="25" />
+          </label>
+          <label class="row">
+            <span>Short break (min)</span>
+            <input type="number" id="shortLength" min="1" max="30" value="5" />
+          </label>
+          <label class="row">
+            <span>Long break (min)</span>
+            <input type="number" id="longLength" min="5" max="60" value="15" />
+          </label>
+          <label class="row">
+            <span>Sessions before long break</span>
+            <input type="number" id="sessionsBeforeLong" min="1" max="8" value="4" />
+          </label>
+          <label class="row">
+            <span>Alarm volume</span>
+            <input type="range" id="alarmVolume" min="0" max="1" step="0.01" value="0.8" />
+          </label>
+        </div>
+        <footer class="modal-footer">
+          <button id="saveSettings" class="primary">Save</button>
+          <button id="cancelSettings" class="ghost">Cancel</button>
+        </footer>
+      </div>
+    </div>
+
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
